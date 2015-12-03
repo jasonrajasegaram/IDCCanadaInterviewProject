@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div id="introduction">
+    <h1>Welcome to IDC Canada's Address Book Application</h1>
+</div>
+<div id="login">
+    <span>Please enter your credentials:</span><br/>
+    <form id="loginForm">
+        <label for="loginUsername">Username:</label>
+        <input type="text" id="loginUsername" name="loginUsername"/><br/>
+        <label for="loginPassword">Password:</label>
+        <input type="password" id="loginPassword" name="loginPassword"/><br/>
+        <input type="submit" id="loginSubmit" /><br/>
+        <a href="http://www.google.com" target="_blank">Forgot Your Password?</a>
+        <a href="~/AddressBook/Index">Address Book</a>
+
+    </form>
+</div>
+<script type="text/javascript">
+    InitializeLogin();
+</script>
+
+

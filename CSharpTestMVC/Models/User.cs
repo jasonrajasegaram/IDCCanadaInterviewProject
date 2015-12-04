@@ -14,6 +14,40 @@ namespace CSharpTestMVC.Models
         public string lastName { get; set; }
         public string password { get; set; }
         public bool isAdmin { get; set; }
+        public virtual ICollection<Contact> userContacts { get; set; }
+    }
+    public class UserJSON
+    {
+        public UserJSON(User aUser)
+        {
+            this.ID = aUser.ID;
+            this.userName = aUser.userName;
+            this.firstName = aUser.firstName;
+            this.lastName = aUser.lastName;
+            this.password = aUser.password;
+            this.isAdmin = aUser.isAdmin;
+            this.userContacts = new List<ContactJSON>();
+            if (aUser.userContacts != null && aUser.userContacts.Count > 0)
+            {
+                foreach (Contact oneC in aUser.userContacts)
+                {
+                    ContactJSON oneCJSON = new ContactJSON(oneC);
+                    this.userContacts.Add(oneCJSON);
+                }
+            }
+        }
+        public int ID { get; set; }
+        public string userName { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string password { get; set; }
+        public bool isAdmin { get; set; }
+        public List<ContactJSON> userContacts { get; set; }
+    }
+    public class LoginStatus
+    {
+        public bool correctPassword { get; set; }
+        public bool userFound { get; set; } 
     }
     public class IDCCanadaAddressBook : DbContext
     {

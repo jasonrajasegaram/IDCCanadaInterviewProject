@@ -11,15 +11,18 @@ namespace CSharpTestMVC.Controllers
     {
         public JsonResult EditContact(int userID, int contactID)
         {
-            return Json("");
+            return Json("", JsonRequestBehavior.AllowGet);
         }
-        public JsonResult DeleteContact(int userID, int contactID)
+        public JsonResult DeleteContact(string contactNumber)
         {
-            return Json("");
+            int contactID = Convert.ToInt32(contactNumber);
+            AddressBookDB.DeleteContact(contactID);
+            return Json("", JsonRequestBehavior.AllowGet);
         }
-        public JsonResult AddNewContact(int userID)
+        public JsonResult AddNewContact(string firstName, string lastName, string phoneNumber, string streetName, string city, string province, string postalCode, string country)
         {
-            return Json("");
+            AddressBookDB.CreateNewContact(firstName, lastName, phoneNumber, streetName, city, province, postalCode, country);
+            return Json("", JsonRequestBehavior.AllowGet);
         }
         // GET: Contact
         public ActionResult Index()

@@ -14,9 +14,5 @@ namespace CSharpTestMVC.Controllers
         {
             return View();
         }
-        public JsonResult GetAddressBook(int userID)
-        {
-            return Json("");
-        }
     }
 }

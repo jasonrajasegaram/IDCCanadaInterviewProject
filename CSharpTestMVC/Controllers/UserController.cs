@@ -12,11 +12,19 @@ namespace CSharpTestMVC.Controllers
         // GET: User
         public JsonResult GetCurrentUser()
         {
-            return Json("");
+            Models.User currUser = new Models.User();
+            currUser = AddressBookDB.GetCurrentUser();
+            Models.UserJSON currUserJSON = new Models.UserJSON(currUser);
+            return Json(currUserJSON, JsonRequestBehavior.AllowGet);
         }
         public JsonResult UpdateUserInformation(int userID)
         {
-            return Json("");
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult CreateNewUser(string firstName, string lastName, string userName, bool isAdmin)
+        {
+            AddressBookDB.CreateNewUser(userName, firstName, lastName, isAdmin);
+            return Json("", JsonRequestBehavior.AllowGet);
         }
     }
 }

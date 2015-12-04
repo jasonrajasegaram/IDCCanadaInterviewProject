@@ -2,7 +2,61 @@
     ViewBag.Title = "Address Book";
 }
 
-<div>
-    Welcome to addressbook
+<div id="AddressBookPage">
+    <span id="userIntro"></span>
+    <div id="AddressBook">
+        <div id="AddressTable">
+
+        </div>
+        <button id="newContactButton" onclick="OpenCreateNewContactForm()">New Contact</button>
+    </div>
+    <div id="contactFormDialog" title="Add New Contact">
+        <form id="createnewcontactform" hidden>
+            <label for="firstName">First Name: </label>
+            <input type="text" id="firstName" name="firstName" /><br />
+            <label for="lastName">Last Name: </label>
+            <input type="text" id="lastName" name="lastName" /><br />
+            <label for="phoneNumber">Phone number: </label>
+            <input type="text" id="phoneNumber" name="phoneNumber" /><br />
+            <label for="streetName">Street Name: </label>
+            <input type="text" id="streetName" name="streetName" /><br />
+            <label for="city">City: </label>
+            <input type="text" id="city" name="city" /><br />
+            <label for="province">Province: </label>
+            <input type="text" id="province" name="province" /><br />
+            <label for="postalCode">Postal Code: </label>
+            <input type="text" id="postalCode" name="postalCode" /><br />
+            <label for="country">Country: </label>
+            <input type="text" id="country" name="country" /><br />
+            <input type="submit" name="submit" id="submit" value="Submit" " />
+        </form>
+    </div>
+    <div id="editContactFormDialog" title="Edit Contact">
+        <form id="editContactform" hidden>
+            <label for="firstName">First Name: </label>
+            <input type="text" id="firstName" name="firstName" /><br />
+            <label for="lastName">Last Name: </label>
+            <input type="text" id="lastName" name="lastName" /><br />
+            <label for="phoneNumber">Phone number: </label>
+            <input type="text" id="phoneNumber" name="phoneNumber" /><br />
+            <label for="streetName">Street Name: </label>
+            <input type="text" id="streetName" name="streetName" /><br />
+            <label for="city">City: </label>
+            <input type="text" id="city" name="city" /><br />
+            <label for="province">Province: </label>
+            <input type="text" id="province" name="province" /><br />
+            <label for="postalCode">Postal Code: </label>
+            <input type="text" id="postalCode" name="postalCode" /><br />
+            <label for="country">Country: </label>
+            <input type="text" id="country" name="country" /><br />
+            <input type="submit" name="submit" id="submit" value="Save" />
+        </form>
+    </div>
 </div>
+
+
+
+<script type="text/javascript">
+    InitializeAddressBook();
+</script>
 

@@ -4,7 +4,7 @@
         data: data,
         dataType: 'json',
         success: function (data, textStatus, jqXHR) {
-            alert(data);
+            successFunction(data);
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert(xhr.status);

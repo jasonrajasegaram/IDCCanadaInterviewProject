@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Password Recovery";
+}
+
+<div id="PasswordRecovery">
+    <h1>Welcome to Password Recovery!</h1>
+    <form id="passwordRecoveryForm">    
+        Please enter your username:
+        <input type="email" id="userName" name="userName" /><br />
+        Please enter the temporary password:
+        <input type="password" id="temporaryPassword" name="temporaryPassword" />
+        <input type="submit" id="submit" name="submit" value="Submit" />
+    </form>
+    <form id="passwordRecoveryFormparttwo" hidden>
+        Please enter a new password:
+        <input type="password" id="password" name="password" /><br /><br />
+        Confirm password:
+        <input type="password" id="passwordConfirm" name="passwordConfirm" />
+        <input type="submit" id="submit" name="submit" value="Submit" />
+    </form>
+    <span id="PasswordChanged" hidden>Congrats you have changed your password! Now you can go ahead and login.</span>
+
+</div>
+<script type="text/javascript">
+    InitializePasswordRecovery();
+</script>

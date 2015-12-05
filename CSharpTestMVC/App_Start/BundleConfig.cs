@@ -34,7 +34,10 @@ namespace CSharpTestMVC
             bundles.Add(new StyleBundle("~/bundles/javascript").Include(
                       "~/Scripts/Ajax.js",
                       "~/Scripts/Login.js",
-                      "~/Scripts/AddressBook.js"));
+                      "~/Scripts/AddressBook.js",
+                      "~/Scripts/Admin.js",
+                      "~/Scripts/Profile.js",
+                      "~/Scripts/PasswordRecovery.js"));
         }
     }
 }

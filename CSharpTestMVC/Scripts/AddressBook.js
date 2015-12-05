@@ -6,6 +6,9 @@ function FillInAddressBook() {
 
     var successFunction = function (userData) {
         $("#AddressBookPage").find("#userIntro").html("Welcome " + userData.firstName + " " + userData.lastName + " to your Address Book!");
+        if (userData.isAdmin) {
+            $("#adminLink").show();
+        }
         var userContacts = userData.userContacts;
         DrawAddressTable(userContacts)
     }
@@ -63,8 +66,8 @@ function InitializeAddressBookSettings() {
             country: "Please enter the country"
         },
         submitHandler: function (form) {
-            $("#contactFormDialog").dialog("close");
-            EditNewContact();
+            $("#editContactFormDialog").dialog("close");
+            EditContact();
         }
     });
 }
@@ -97,7 +100,9 @@ function DrawAddressTable(userContacts){
     });
     $("#AddressTable").find(".editContactButton").each(function (index, ele) {
         $(ele).click(function () {
+            var contactID = $(ele).attr('id').split("_")[1];
             var contactIndex = $(ele).attr('id').split("_")[2];
+            $("#editContactform").find(".contactID").attr('id', contactID);
             $("#editContactform").find("#firstName").val(userContacts[contactIndex].firstName);
             $("#editContactform").find("#lastName").val(userContacts[contactIndex].lastName);
             $("#editContactform").find("#phoneNumber").val(userContacts[contactIndex].phoneNumber);
@@ -163,4 +168,30 @@ function RemoveContact(contactNumber) {
         FillInAddressBook();
     }
     ajaxCall("/Contact/DeleteContact", sendData, successFunction, null);
+}
+function EditContact() {
+    var contactID=$("#editContactform").find(".contactID").attr('id');
+    var firstName=$("#editContactform").find("#firstName").val();
+    var lastName=$("#editContactform").find("#lastName").val();
+    var phoneNumber=$("#editContactform").find("#phoneNumber").val();
+    var streetName = $("#editContactform").find("#streetName").val();
+    var city = $("#editContactform").find("#city").val();
+    var province = $("#editContactform").find("#province").val();
+    var postalCode = $("#editContactform").find("#postalCode").val();
+    var country = $("#editContactform").find("#country").val();
+    var sendData = {
+        contactID: contactID,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        streetName: streetName,
+        city: city,
+        province: province,
+        postalCode: postalCode,
+        country: country
+    }
+    var successFunction = function(){
+        FillInAddressBook();
+    }
+    ajaxCall("/Contact/EditContact", sendData, successFunction, null);
 }

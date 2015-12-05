@@ -7,9 +7,9 @@ using CSharpTestMVC.Models;
 
 namespace CSharpTestMVC.Controllers
 {
-    public class AddressBookController : Controller
+    public class PersonalSettingsController : Controller
     {
-        // GET: AddressBook
+        // GET: PersonalSettings
         public ActionResult Index()
         {
             Models.User user = new Models.User();

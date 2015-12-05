@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Admin Book";
+}
+
+<div id="AdminBookPage">
+    <span id="adminIntro"></span>
+    <a id="addressBookLink" href="~/AddressBook/Index" target="_blank" hidden>Address Book</a>
+    <a id="personalSettingsLink" href="~/PersonalSettings/Index" target="_blank">Personal Settings</a>
+    <div id="AdminBook">
+        <div id="AdminTable">
+
+        </div>
+        <button id="newUserButton" onclick="OpenCreateNewUserForm()">New User</button>
+    </div>
+    <div id="userFormDialog" title="Add New User">
+        <form id="createnewuserform" hidden>
+            <label for="firstName">First Name: </label>
+            <input type="text" id="firstName" name="firstName" /><br />
+            <label for="lastName">Last Name: </label>
+            <input type="text" id="lastName" name="lastName" /><br />
+            <label for="userName">Username: </label>
+            <input type="email" id="userName" name="userName" /><br />
+            <label for="isAdmin">Admin:</label>
+            <input type="checkbox" id="isAdmin" name="isAdmin" /><br />
+            <input type="submit" name="submit" id="submit" value="Submit" />
+        </form>
+    </div>
+    <div id="editUserFormDialog" title="Edit User">
+        <form id="editUserform" hidden>
+            <span class="userID" hidden></span>
+            <label for="firstName">First Name: </label>
+            <input type="text" id="firstName" name="firstName" /><br />
+            <label for="lastName">Last Name: </label>
+            <input type="text" id="lastName" name="lastName" /><br />
+            <label for="userName">Username: </label>
+            <input type="email" id="userName" name="userName" /><br />
+            <label for="isAdmin">Admin:</label>
+            <input type="checkbox" id="isAdmin" name="isAdmin" /><br />
+            <input type="submit" name="submit" id="submit" value="Save" />
+        </form>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    InitializeAdminBook();
+</script>

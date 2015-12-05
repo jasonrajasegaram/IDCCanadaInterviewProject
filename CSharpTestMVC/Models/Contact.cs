@@ -23,10 +23,16 @@ namespace CSharpTestMVC.Models
     {
         public ContactJSON(Contact aContact)
         {
+            string decryptedFirstName = "";
+            string decryptedLastName = "";
+            string decryptedPhoneNumber = "";
+            AddressBookDB.decrypt(aContact.firstName, ref decryptedFirstName);
+            AddressBookDB.decrypt(aContact.lastName, ref decryptedLastName);
+            AddressBookDB.decrypt(aContact.phoneNumber, ref decryptedPhoneNumber);
             this.ID = aContact.ID;
-            this.firstName = aContact.firstName;
-            this.lastName = aContact.lastName;
-            this.phoneNumber = aContact.phoneNumber;
+            this.firstName = decryptedFirstName;
+            this.lastName = decryptedLastName;
+            this.phoneNumber = decryptedPhoneNumber;
             this.city = aContact.city;
             this.streetName = aContact.streetName;
             this.province = aContact.province;

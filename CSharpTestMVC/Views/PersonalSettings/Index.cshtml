@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "My Profile";
+}
+<div id="ProfilePage">
+    <div id="Profile">
+        <h1>Welcome to your Profile!</h1>
+        <span class="userID" hidden></span>
+        <span id="userName"></span><br />
+        <span id="firstName"></span><br />
+        <span id="lastName"></span><br />
+    </div>
+    <button id="EditProfile" onclick="OpenEditProfileForm()">Edit Profile</button>
+    <div id="editProfileFormDialog" title="Edit Profile">
+        <form id="editProfileform" hidden>
+            <span class="userID" hidden></span>
+            <label for="firstName">First Name: </label>
+            <input type="text" id="firstName" name="firstName" /><br />
+            <label for="lastName">Last Name: </label>
+            <input type="text" id="lastName" name="lastName" /><br />
+            <label for="userName">Username: </label>
+            <input type="text" id="userName" name="userName" /><br />
+            <input type="submit" name="submit" id="submit" value="Save" />
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    InitializeProfile();
+</script>

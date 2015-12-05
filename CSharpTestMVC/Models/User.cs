@@ -13,6 +13,7 @@ namespace CSharpTestMVC.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string password { get; set; }
+        public string temporaryPassword { get; set; }
         public bool isAdmin { get; set; }
         public virtual ICollection<Contact> userContacts { get; set; }
     }
@@ -20,10 +21,14 @@ namespace CSharpTestMVC.Models
     {
         public UserJSON(User aUser)
         {
+            string decryptedFirstname = "";
+            string decryptedLastname = "";
+            AddressBookDB.decrypt(aUser.firstName, ref decryptedFirstname);
+            AddressBookDB.decrypt(aUser.lastName, ref decryptedLastname);
             this.ID = aUser.ID;
             this.userName = aUser.userName;
-            this.firstName = aUser.firstName;
-            this.lastName = aUser.lastName;
+            this.firstName = decryptedFirstname;
+            this.lastName = decryptedLastname;
             this.password = aUser.password;
             this.isAdmin = aUser.isAdmin;
             this.userContacts = new List<ContactJSON>();

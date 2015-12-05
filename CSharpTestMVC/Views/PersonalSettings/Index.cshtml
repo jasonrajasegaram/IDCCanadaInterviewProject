@@ -2,14 +2,16 @@
     ViewBag.Title = "My Profile";
 }
 <div id="ProfilePage">
+    <h1>Welcome to your Profile!</h1>
     <div id="Profile">
-        <h1>Welcome to your Profile!</h1>
         <span class="userID" hidden></span>
         <span id="userName"></span><br />
         <span id="firstName"></span><br />
         <span id="lastName"></span><br />
+        <button id="EditProfile" onclick="OpenEditProfileForm()">Edit Profile</button>
+        <button id="ChangePassword" onclick="OpenChangePasswordForm()">ChangePassword</button>
     </div>
-    <button id="EditProfile" onclick="OpenEditProfileForm()">Edit Profile</button>
+
     <div id="editProfileFormDialog" title="Edit Profile">
         <form id="editProfileform" hidden>
             <span class="userID" hidden></span>
@@ -20,6 +22,18 @@
             <label for="userName">Username: </label>
             <input type="text" id="userName" name="userName" /><br />
             <input type="submit" name="submit" id="submit" value="Save" />
+        </form>
+    </div>
+    <div id="changePasswordFormDialog" title="Change Password">
+        <form id="changePasswordform" hidden>
+            <span class="userID" hidden></span>
+            <label for="oldPassword">Old Password: </label>
+            <input type="password" id="oldPassword" name="oldPassword" /><br />
+            <label for="newPassword">New Password: </label>
+            <input type="password" id="newPassword" name="newPassword" /><br />
+            <label for="newPasswordConfirm">Confirm New Password: </label>
+            <input type="password" id="newPasswordConfirm" name="newPasswordConfirm" /><br />
+            <input type="submit" id="submit" name="submit" value="Change" />
         </form>
     </div>
 </div>

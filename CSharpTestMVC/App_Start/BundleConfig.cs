@@ -29,7 +29,8 @@ namespace CSharpTestMVC
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/themes/smoothness/jquery-ui.smoothness.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/AddressBook.css"));
             //bundles.Add(new StyleBundle("~Content/jqueryStyles").IncludeDirectory("~/Content/themes", ".css", true));
             bundles.Add(new StyleBundle("~/bundles/javascript").Include(
                       "~/Scripts/Ajax.js",

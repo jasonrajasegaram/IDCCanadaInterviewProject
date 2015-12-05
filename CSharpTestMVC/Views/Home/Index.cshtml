@@ -3,15 +3,18 @@
 }
 
 <div id="introduction">
-    <h1>Welcome to IDC Canada's Address Book Application</h1>
+    <h1>Welcome to IDC Canada's Address Book</h1>
+</div>
+<div id="spinner" hidden>
+    <i class="fa fa-spinner fa-pulse fa-2x"></i>
 </div>
 <div id="login">
-    <span id="loginCredentialCheck">Please enter your credentials:</span><br/>
+    <span id="loginCredentialCheck"><br/><b>Please enter your credentials:</b></span><br/><br />
     <form id="loginForm">
         <label for="loginUsername">Username:</label>
-        <input type="email" id="loginUsername" name="loginUsername"/><br/>
+        <input type="email" id="loginUsername" name="loginUsername"/><br/><br/>
         <label for="loginPassword">Password:</label>
-        <input type="password" id="loginPassword" name="loginPassword"/><br/>
+        <input type="password" id="loginPassword" name="loginPassword"/><br/><br/>
         <input type="submit" id="submit" name="submit"/><br/>
         <a href="~/ForgotPassword/SendTemporary" target="_blank">Forgot Your Password?</a>
 

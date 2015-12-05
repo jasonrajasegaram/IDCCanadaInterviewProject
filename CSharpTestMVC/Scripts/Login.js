@@ -27,13 +27,16 @@ function SubmitLoginInfo() {
                 window.location = "AddressBook/Index";
             }
             else {
+                $("#spinner").hide();
                 alert("Invalid Credentials");
             }
         }
         else {
+            $("#spinner").hide();
             alert("Invalid Credentials");
         }
 
     }
+    $("#spinner").show();
     ajaxCall("/Home/Login", sendData, successFunction, null);
 }

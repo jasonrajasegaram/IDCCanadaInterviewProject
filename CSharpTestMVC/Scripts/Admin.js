@@ -1,11 +1,13 @@
 ﻿function InitializeAdminBook() {
+    $(".navigationBar").show();
+    $(".adminBookLink").show();
     FillInAdminBook();
     InitializeAdminBookSettings();
 }
 function FillInAdminBook() {
 
     var successFunction = function (adminData) {
-        $("#AdminBookPage").find("#adminIntro").html("Welcome " + adminData.userData.firstName + " " + adminData.userData.lastName + " to your Admin Book!");
+        $("#AdminBookPage").find("#adminIntro").html("<h1>Welcome " + adminData.userData.firstName + " " + adminData.userData.lastName + " to your Admin Book!</h1><span><b>Click a user to view their details</b></span>");
         var adminList = adminData.userList;
         DrawAdminTable(adminList)
     }
@@ -49,19 +51,36 @@ function InitializeAdminBookSettings() {
     });
 }
 function DrawAdminTable(adminList) {
-    var HTMLString = "<table border='1'>";
+    var HTMLStringTwo = "";
     for (var i = 0; i < adminList.length; i++) {
         var oneUser = adminList[i];
-        HTMLString += "<tr class='adminBookItem' id='" + oneUser.ID + "'>";
-        HTMLString += "<td>" + oneUser.firstName + " </td>";
-        HTMLString += "<td>" + oneUser.lastName + " </td>";
-        HTMLString += "<td>" + oneUser.userName+ " </td>";
-        HTMLString += "<td><button id='EditButton_" + oneUser.ID + "_" + i + "' class='editUserButton'>Edit</button><button id='DeleteButton_" + oneUser.ID + "_" + i + "' class='deleteUserButton'>Delete</button></td>"
-        HTMLString += "</tr>"
+        HTMLStringTwo += "<div class='adminBookItem' id='" + oneUser.ID + "'>";
+        HTMLStringTwo += "<div class='adminBookBody'><span class='adminBookItemName'>" + oneUser.firstName + " " + oneUser.lastName + "</span>";
+        HTMLStringTwo += "<div class='adminBookBodyInfo'hidden><br/><span><b>Username: </b> " + oneUser.userName + "</span><br/>";
+        HTMLStringTwo += "<span><b>Admin: </b> " + oneUser.isAdmin+ "</span><br/>";
+        HTMLStringTwo += "<button id='EditButton_" + oneUser.ID + "_" + i + "' class='editUserButton'>Edit</button><button id='DeleteButton_" + oneUser.ID + "_" + i + "' class='deleteUserButton'>Delete</button><br/>";
+        HTMLStringTwo += "</div>";
+        HTMLStringTwo += "</div>";
+        HTMLStringTwo += "</div>";
     }
-    HTMLString += "</table>";
-    $("#AdminBookPage").find("#AdminTable").html(HTMLString);
-    $("#AdminTable").find(".deleteUserButton").each(function (index, ele) {
+    $("#AdminBookPage").find("#AdminDropDown").html(HTMLStringTwo);
+    $("#AdminDropDown").find(".adminBookBody").each(function (index, ele) {
+        $(ele).find(".adminBookItemName").click(function () {
+            if ($(ele).find(".adminBookBodyInfo").is(':visible')) {
+                $(ele).find(".adminBookBodyInfo").hide();
+            }
+            else {
+                $(ele).find(".adminBookBodyInfo").show();
+            }
+
+        });
+        $(ele).find(".adminBookItemName").hover(function () {
+            $(ele).find(".adminBookItemName").addClass('addressBookHover');
+        }, function () {
+            $(ele).find(".adminBookItemName").removeClass('addressBookHover');
+        });
+    });
+    $("#AdminDropDown").find(".deleteUserButton").each(function (index, ele) {
         $(ele).click(function () {
             var userNumber = $(ele).attr('id').split("_")[1];
             var deleteUser = confirm("Are you sure you want to delete this user?")
@@ -70,7 +89,7 @@ function DrawAdminTable(adminList) {
             }
         })
     });
-    $("#AdminTable").find(".editUserButton").each(function (index, ele) {
+    $("#AdminDropDown").find(".editUserButton").each(function (index, ele) {
         $(ele).click(function () {
             var userID = $(ele).attr('id').split("_")[1];
             var userIndex = $(ele).attr('id').split("_")[2];
@@ -107,9 +126,18 @@ function SubmitNewUser() {
         userName: userName,
         isAdmin: isAdmin
     };
-    var successFunction = function () {
-        FillInAdminBook();
-        alert("Successfully added new user!")
+    var successFunction = function (result) {
+        if (!result) {
+            FillInAdminBook();
+            alert("Successfully added new user!");
+            $("#createnewuserform").find("#firstName").val("");
+            $("#createnewuserform").find("#lastName").val("");
+            $("#createnewuserform").find("#userName").val("");
+            $("#createnewuserform").find("#isAdmin").prop('checked', false);
+        }
+        else {
+            alert("This username already exists! Please choose a new one");
+        }
     }
     ajaxCall("/User/AddNewUser", sendData, successFunction, null);
 

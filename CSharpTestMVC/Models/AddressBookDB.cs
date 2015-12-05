@@ -95,31 +95,41 @@ namespace CSharpTestMVC.Models
             return currUser;
         }
 
-        public static UInt32 AddNewUser(string userName, string firstName, string lastName, bool isAdmin)
+        public static UInt32 AddNewUser(string userName, string firstName, string lastName, bool isAdmin, ref bool userExists)
         {
             UInt32 retVal = 0;
             User newUser = new User();
-            string encryptedFirstname = "";
-            string encryptedLastname = "";
-            encrypt(firstName, ref encryptedFirstname);
-            encrypt(lastName, ref encryptedLastname);
-            newUser.userName = userName;
-            newUser.firstName = encryptedFirstname;
-            newUser.lastName = encryptedLastname;
-            newUser.isAdmin = isAdmin;
-            string passwordToEncrypt = System.Web.Security.Membership.GeneratePassword(9, 2);
-            string encryptedPassword = "";
-            encrypt(passwordToEncrypt, ref encryptedPassword);
-            newUser.password = encryptedPassword;
-            newUser.temporaryPassword = encryptedPassword;
             var db = new IDCCanadaAddressBook();
-            db.Users.Add(newUser);
-            db.SaveChanges();
-            Uri myuri = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
-            string pathQuery = myuri.PathAndQuery;
-            string hostName = myuri.ToString().Replace(pathQuery, "");
-            string forgotPasswordLink = hostName + "/ForgotPassword/Index";
-            SendEmail(newUser.userName, "Address Book Account Confirmation", "Hello " + firstName + ", Your username is " + userName + " and your temporary password is " + passwordToEncrypt + ". To change your password please go to the following link: " + forgotPasswordLink);
+            newUser = db.Users.Where(u => u.userName == userName).FirstOrDefault();
+            if (newUser == null)
+            {
+                newUser = new User();
+                string encryptedFirstname = "";
+                string encryptedLastname = "";
+                encrypt(firstName, ref encryptedFirstname);
+                encrypt(lastName, ref encryptedLastname);
+                newUser.userName = userName;
+                newUser.firstName = encryptedFirstname;
+                newUser.lastName = encryptedLastname;
+                newUser.isAdmin = isAdmin;
+                string passwordToEncrypt = System.Web.Security.Membership.GeneratePassword(9, 2);
+                string encryptedPassword = "";
+                encrypt(passwordToEncrypt, ref encryptedPassword);
+                newUser.password = encryptedPassword;
+                newUser.temporaryPassword = encryptedPassword;
+
+                db.Users.Add(newUser);
+                db.SaveChanges();
+                Uri myuri = new Uri(HttpContext.Current.Request.Url.AbsoluteUri);
+                string pathQuery = myuri.PathAndQuery;
+                string hostName = myuri.ToString().Replace(pathQuery, "");
+                string forgotPasswordLink = hostName + "/ForgotPassword/Index";
+                SendEmail(newUser.userName, "Address Book Account Confirmation", "Hello " + firstName + ", Your username is " + userName + " and your temporary password is " + passwordToEncrypt + ". To change your password please go to the following link: " + forgotPasswordLink);
+            }
+            else
+            {
+                userExists = true;
+            }
             return retVal;
         }
 

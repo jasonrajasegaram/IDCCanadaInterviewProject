@@ -170,9 +170,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201512031936327_intial.cs" />
-    <Compile Include="Migrations\201512031936327_intial.Designer.cs">
-      <DependentUpon>201512031936327_intial.cs</DependentUpon>
+    <Compile Include="Migrations\201512052231387_initial.cs" />
+    <Compile Include="Migrations\201512052231387_initial.Designer.cs">
+      <DependentUpon>201512052231387_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -183,6 +183,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AddressBook.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -668,8 +669,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201512031936327_intial.resx">
-      <DependentUpon>201512031936327_intial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201512052231387_initial.resx">
+      <DependentUpon>201512052231387_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

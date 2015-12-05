@@ -15,7 +15,12 @@
 
 </head>
 <body>
-    
+    <div class="navigationBar" style="display:none;">
+        <span class="navLink personalSettingsLink"><a class="navAction" href="@Url.Action("Index", "PersonalSettings")">Settings</a></span>
+        <span class="navLink adminBookLink" style="display:none;" ><a class="navAction" href="@Url.Action("Index", "Admin")">My AdminBook</a></span>
+        <span class="navLink addressBookLink"><a class="navAction" href="@Url.Action("Index","AddressBook")">My AddressBook</a></span>
+
+    </div>
     <div class="container body-content">
         @RenderBody()
         <footer>

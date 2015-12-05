@@ -27,7 +27,12 @@ namespace CSharpTestMVC.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            context.Users.Add(new User() { firstName = "Jason", lastName = "Rajasegaram", userName = "jasonrajasegaram@hotmail.com", isAdmin = true });
+            string encryptedfirstname = "";
+            string encryptedlastname = "";
+            AddressBookDB.encrypt("Jason", ref encryptedfirstname);
+            AddressBookDB.encrypt("Rajasegaram", ref encryptedlastname);
+
+            context.Users.Add(new User() { firstName = encryptedfirstname, lastName = encryptedlastname, userName = "jasonrajasegaram@hotmail.com", isAdmin = true });
         }
     }
 }

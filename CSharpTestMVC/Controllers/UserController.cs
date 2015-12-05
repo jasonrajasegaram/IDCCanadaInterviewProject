@@ -31,8 +31,9 @@ namespace CSharpTestMVC.Controllers
         }
         public JsonResult AddNewUser(string firstName, string lastName, string userName, bool isAdmin)
         {
-            AddressBookDB.AddNewUser(userName, firstName, lastName, isAdmin);
-            return Json("", JsonRequestBehavior.AllowGet);
+            bool userExists = false;
+            AddressBookDB.AddNewUser(userName, firstName, lastName, isAdmin, ref userExists);
+            return Json(userExists, JsonRequestBehavior.AllowGet);
         }
         public JsonResult DeleteUser(string userNumber)
         {

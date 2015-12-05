@@ -1,13 +1,17 @@
 ﻿function InitializeAddressBook() {
+    $(".navigationBar").show();
     FillInAddressBook();
     InitializeAddressBookSettings();
 }
 function FillInAddressBook() {
 
     var successFunction = function (userData) {
-        $("#AddressBookPage").find("#userIntro").html("Welcome " + userData.firstName + " " + userData.lastName + " to your Address Book!");
+        $("#AddressBookPage").find("#userIntro").html("<h1>Welcome " + userData.firstName + " " + userData.lastName + " to your Address Book!</h1><span><b>Click a contact to view their details</b></span>");
         if (userData.isAdmin) {
-            $("#adminLink").show();
+            $(".adminBookLink").show();
+        }
+        else {
+            $(".adminBookLink").hide();
         }
         var userContacts = userData.userContacts;
         DrawAddressTable(userContacts)
@@ -72,24 +76,40 @@ function InitializeAddressBookSettings() {
     });
 }
 function DrawAddressTable(userContacts){
-    var HTMLString = "<table border='1'>";
+    var HTMLStringTwo = ""; 
     for (var i = 0; i < userContacts.length; i++) {
-        var oneContact =userContacts[i];
-        HTMLString +="<tr class='addressBookItem' id='" + oneContact.ID +"'>";
-        HTMLString += "<td>" + oneContact.firstName + " </td>";
-        HTMLString += "<td>" + oneContact.lastName + " </td>";
-        HTMLString += "<td>" + oneContact.phoneNumber + " </td>";
-        HTMLString += "<td>" + oneContact.streetName + " </td>";
-        HTMLString += "<td>" + oneContact.city + " </td>";
-        HTMLString += "<td>" + oneContact.province + " </td>";
-        HTMLString += "<td>" + oneContact.postalCode + " </td>";
-        HTMLString += "<td>" + oneContact.country + " </td>";
-        HTMLString += "<td><button id='EditButton_" + oneContact.ID + "_" + i + "' class='editContactButton'>Edit</button><button id='DeleteButton_" + oneContact.ID + "_" + i + "' class='deleteContactButton'>Delete</button></td>"
-        HTMLString += "</tr>"
+        var oneContact = userContacts[i];
+        HTMLStringTwo += "<div class='addressBookItem' id='" + oneContact.ID + "'>";
+        HTMLStringTwo += "<div class='addressBookBody'><span class='addressBookItemName'>" + oneContact.firstName + " " + oneContact.lastName + "</span>";
+        HTMLStringTwo += "<div class='addressBookBodyInfo'hidden><br/><span><b>Phone Number:</b> " + oneContact.phoneNumber + "</span><br/>";
+        HTMLStringTwo += "<span><b>StreetName:</b> " + oneContact.streetName + "</span><br/>";
+        HTMLStringTwo += "<span><b>City:</b> " + oneContact.city + "</span><br/>";
+        HTMLStringTwo += "<span><b>Province:</b> " + oneContact.province + "</span><br/>";
+        HTMLStringTwo += "<span><b>Postal Code:</b> " + oneContact.postalCode + "</span><br/>";
+        HTMLStringTwo += "<span><b>Country:</b> " + oneContact.country + "</span><br/><br/>";
+        HTMLStringTwo += "<button id='EditButton_" + oneContact.ID + "_" + i + "' class='editContactButton'>Edit</button><button id='DeleteButton_" + oneContact.ID + "_" + i + "' class='deleteContactButton'>Delete</button><br/>";
+        HTMLStringTwo += "</div>";
+        HTMLStringTwo += "</div>";
+        HTMLStringTwo += "</div>";
     }
-    HTMLString += "</table>";
-    $("#AddressBookPage").find("#AddressTable").html(HTMLString);
-    $("#AddressTable").find(".deleteContactButton").each(function (index, ele) {
+    $("#AddressBookPage").find("#AddressDropDown").html(HTMLStringTwo);
+    $("#AddressDropDown").find(".addressBookBody").each(function (index, ele) {
+        $(ele).find(".addressBookItemName").click(function () {
+            if ($(ele).find(".addressBookBodyInfo").is(':visible')){
+                $(ele).find(".addressBookBodyInfo").hide();
+            }
+            else {
+                $(ele).find(".addressBookBodyInfo").show();
+            }
+            
+        });
+        $(ele).find(".addressBookItemName").hover(function () {
+            $(ele).find(".addressBookItemName").addClass('addressBookHover');
+        }, function () {
+            $(ele).find(".addressBookItemName").removeClass('addressBookHover');
+        });
+    });
+    $("#AddressDropDown").find(".deleteContactButton").each(function (index, ele) {
         $(ele).click(function(){
             var contactNumber = $(ele).attr('id').split("_")[1];
             var deleteContact = confirm("Are you sure you want to delete this contact?")
@@ -98,7 +118,7 @@ function DrawAddressTable(userContacts){
             }
         })
     });
-    $("#AddressTable").find(".editContactButton").each(function (index, ele) {
+    $("#AddressDropDown").find(".editContactButton").each(function (index, ele) {
         $(ele).click(function () {
             var contactID = $(ele).attr('id').split("_")[1];
             var contactIndex = $(ele).attr('id').split("_")[2];
@@ -145,7 +165,15 @@ function SubmitNewContact() {
     };
     var successFunction = function () {
         FillInAddressBook();
-        alert("Successfully added new contact!")
+        alert("Successfully added new contact!");
+        $("#createnewcontactform").find("#firstName").val("");
+        $("#createnewcontactform").find("#lastName").val("");
+        $("#createnewcontactform").find("#phoneNumber").val("");
+        $("#createnewcontactform").find("#streetName").val("");
+        $("#createnewcontactform").find("#city").val("");
+        $("#createnewcontactform").find("#province").val("");
+        $("#createnewcontactform").find("#postalCode").val("");
+        $("#createnewcontactform").find("#country").val("");
     }
     ajaxCall("/Contact/AddNewContact", sendData, successFunction, null);
 

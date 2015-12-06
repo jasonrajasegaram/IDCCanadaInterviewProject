@@ -112,7 +112,7 @@ namespace CSharpTestMVC.Models
                 newUser.firstName = encryptedFirstname;
                 newUser.lastName = encryptedLastname;
                 newUser.isAdmin = isAdmin;
-                string passwordToEncrypt = System.Web.Security.Membership.GeneratePassword(9, 2);
+                string passwordToEncrypt = System.Web.Security.Membership.GeneratePassword(9,0);
                 string encryptedPassword = "";
                 encrypt(passwordToEncrypt, ref encryptedPassword);
                 newUser.password = encryptedPassword;
@@ -282,7 +282,7 @@ namespace CSharpTestMVC.Models
 
             return retVal;
         }
-        //Temporary Password Code
+        //Password Code
         public static bool TemporaryPasswordCheck(string userName, string temporaryPassword)
         {
             bool tempCorrect = false;
@@ -330,7 +330,7 @@ namespace CSharpTestMVC.Models
                 userFound = true;
                 string decryptedFirstName = "";
                 decrypt(user.firstName, ref decryptedFirstName);
-                string passwordToEncrypt = System.Web.Security.Membership.GeneratePassword(9, 2);
+                string passwordToEncrypt = System.Web.Security.Membership.GeneratePassword(9, 0);
                 string encryptedTempPassword = "";
                 encrypt(passwordToEncrypt, ref encryptedTempPassword);
                 user.temporaryPassword = encryptedTempPassword;
@@ -342,6 +342,27 @@ namespace CSharpTestMVC.Models
                 SendEmail(userName, "Address Book Account Confirmation", "Hello " + decryptedFirstName + ", Your username is " + userName + " and your temporary password is " + passwordToEncrypt + ". To change your password please go to the following link: " + forgotPasswordLink);
             }
             return userFound;
+        }
+        public static UInt32 ChangePasswordByUserID(int userID, string oldPassword, string newPassword, ref bool correctPassword)
+        {
+            UInt32 retVal = 0;
+            User user = new User();
+            var db = new IDCCanadaAddressBook();
+            user = db.Users.Where(u => u.ID == userID).FirstOrDefault();
+            if (user != null)
+            {
+                string decryptedPassword = "";
+                decrypt(user.password, ref decryptedPassword);
+                if (decryptedPassword == oldPassword)
+                {
+                    correctPassword = true;
+                    string encryptedNewPassword = "";
+                    encrypt(newPassword, ref encryptedNewPassword);
+                    user.password = encryptedNewPassword;
+                    db.SaveChanges();
+                }
+            }
+            return retVal;
         }
     }
 }

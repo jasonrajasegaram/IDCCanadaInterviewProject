@@ -47,5 +47,12 @@ namespace CSharpTestMVC.Controllers
             AddressBookDB.EditUser(userIDNumber, firstName, lastName, userName, isAdmin);
             return Json("", JsonRequestBehavior.AllowGet);
         }
+        public JsonResult ChangePassword(string oldPassword, string newPassword, string userID)
+        {
+            bool correctPassword = false;
+            int userIDNumber = Convert.ToInt32(userID);
+            AddressBookDB.ChangePasswordByUserID(userIDNumber, oldPassword, newPassword, ref correctPassword);
+            return Json(correctPassword, JsonRequestBehavior.AllowGet);
+        }
     }
 }

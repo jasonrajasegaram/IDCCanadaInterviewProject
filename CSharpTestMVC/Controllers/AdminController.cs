@@ -31,7 +31,7 @@ namespace CSharpTestMVC.Controllers
             List<UserJSON> userList = new List<UserJSON>();
             var db = new IDCCanadaAddressBook();
             List<User> users = new List<User>();
-            users = db.Users.ToList();
+            users = db.Users.Where(u=>u.ID !=user.ID).ToList();
             foreach (User aUser in users)
             {
                 UserJSON aUserJson = new UserJSON(aUser);

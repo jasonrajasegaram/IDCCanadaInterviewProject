@@ -10,12 +10,15 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/javascript")
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script src="//cdn.ckeditor.com/4.5.5/basic/ckeditor.js"></script>
+    @Scripts.Render("~/bundles/javascript")
+
 
 </head>
 <body>
     <div class="navigationBar" style="display:none;">
+        <span class="navLink logOutLink"><a class="navAction" href="@Url.Action("Index","LogOut")">Logout</a></span>
         <span class="navLink personalSettingsLink"><a class="navAction" href="@Url.Action("Index", "PersonalSettings")">My Profile</a></span>
         <span class="navLink adminBookLink" style="display:none;" ><a class="navAction" href="@Url.Action("Index", "Admin")">My AdminBook</a></span>
         <span class="navLink addressBookLink"><a class="navAction" href="@Url.Action("Index","AddressBook")">My AddressBook</a></span>

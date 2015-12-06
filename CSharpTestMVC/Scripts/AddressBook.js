@@ -86,7 +86,12 @@ function DrawAddressTable(userContacts){
         HTMLStringTwo += "<span><b>City:</b> " + oneContact.city + "</span><br/>";
         HTMLStringTwo += "<span><b>Province:</b> " + oneContact.province + "</span><br/>";
         HTMLStringTwo += "<span><b>Postal Code:</b> " + oneContact.postalCode + "</span><br/>";
-        HTMLStringTwo += "<span><b>Country:</b> " + oneContact.country + "</span><br/><br/>";
+        HTMLStringTwo += "<span><b>Country:</b> " + oneContact.country + "</span><br/>";
+        var notes = oneContact.notes;
+        if (notes == null) {
+            notes = "";
+        }
+        HTMLStringTwo += "<span><b>Notes:</b> " + notes + "</span><br/><br/>";
         HTMLStringTwo += "<button id='EditButton_" + oneContact.ID + "_" + i + "' class='editContactButton'>Edit</button><button id='DeleteButton_" + oneContact.ID + "_" + i + "' class='deleteContactButton'>Delete</button><br/>";
         HTMLStringTwo += "</div>";
         HTMLStringTwo += "</div>";
@@ -134,9 +139,24 @@ function DrawAddressTable(userContacts){
             $("#editContactform").show();
             $("#editContactFormDialog").dialog({
                 autoOpen: false,
-                height: 400,
+                height: 600,
                 width: 800,
-                modal: true
+                modal: true,
+                open: function () {
+                    CKEDITOR.replace('editNotes', {
+                        height: '200px',
+                        width: '400px'
+                    });
+                    var editNotes = userContacts[contactIndex].notes;
+                    if (editNotes == null) {
+                        editNotes = "";
+                    }
+                    CKEDITOR.instances.editNotes.setData(editNotes);
+                },
+                close: function () {
+                    $("#editContactform").find("#editNotes").val(CKEDITOR.instances.editNotes.getData());
+                    CKEDITOR.instances.editNotes.destroy(false);
+                }
             });
             $("#editContactFormDialog").dialog("open");
         })
@@ -150,7 +170,8 @@ function SubmitNewContact() {
     var city= $("#createnewcontactform").find("#city").val();
     var province= $("#createnewcontactform").find("#province").val();
     var postalCode= $("#createnewcontactform").find("#postalCode").val();
-    var country= $("#createnewcontactform").find("#country").val();
+    var country = $("#createnewcontactform").find("#country").val();
+    var notes = $("#createnewcontactform").find("#notes").val();
 
 
     var sendData = {
@@ -161,7 +182,8 @@ function SubmitNewContact() {
         city: city,
         province: province,
         postalCode: postalCode,
-        country: country
+        country: country,
+        notes: notes
     };
     var successFunction = function () {
         FillInAddressBook();
@@ -174,6 +196,8 @@ function SubmitNewContact() {
         $("#createnewcontactform").find("#province").val("");
         $("#createnewcontactform").find("#postalCode").val("");
         $("#createnewcontactform").find("#country").val("");
+        $("#createnewcontactform").find("#notes").val("");
+
     }
     ajaxCall("/Contact/AddNewContact", sendData, successFunction, null);
 
@@ -182,9 +206,20 @@ function OpenCreateNewContactForm() {
     $("#createnewcontactform").show();
     $("#contactFormDialog").dialog({
         autoOpen: false,
-        height: 400,
-        width:800,
-        modal: true
+        height: 700,
+        width:700,
+        modal: true,
+        dialogClass: "dialogFormatClass",
+        open: function () {
+            CKEDITOR.replace('notes', {
+                height: '200px',
+                width: '400px'
+            });
+        },
+        close: function () {
+            $("#createnewcontactform").find("#notes").val(CKEDITOR.instances.notes.getData());
+            CKEDITOR.instances.notes.destroy(false);
+        }
     });
     $("#contactFormDialog").dialog("open");
 }
@@ -207,6 +242,7 @@ function EditContact() {
     var province = $("#editContactform").find("#province").val();
     var postalCode = $("#editContactform").find("#postalCode").val();
     var country = $("#editContactform").find("#country").val();
+    var notes = $("#editContactform").find("#editNotes").val();
     var sendData = {
         contactID: contactID,
         firstName: firstName,
@@ -216,9 +252,11 @@ function EditContact() {
         city: city,
         province: province,
         postalCode: postalCode,
-        country: country
+        country: country,
+        notes: notes
     }
-    var successFunction = function(){
+    var successFunction = function () {
+        $("#editContactform").find("#editNotes").val("");
         FillInAddressBook();
     }
     ajaxCall("/Contact/EditContact", sendData, successFunction, null);

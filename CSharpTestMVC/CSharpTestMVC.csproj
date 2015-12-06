@@ -165,6 +165,7 @@
     <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\ForgotPasswordController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogOutController.cs" />
     <Compile Include="Controllers\PersonalSettingsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -619,6 +620,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\IDCCanadaInterviewProject.pubxml" />
     <None Include="Scripts\jquery-1.11.0.intellisense.js" />
+    <Content Include="Scripts\dialog-patch.js" />
     <Content Include="Scripts\jquery-1.11.0.js" />
     <Content Include="Scripts\jquery-1.11.0.min.js" />
     <Content Include="Scripts\jquery-1.11.0.min.map" />
@@ -659,6 +661,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Contact\" />
+    <Folder Include="Views\LogOut\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>

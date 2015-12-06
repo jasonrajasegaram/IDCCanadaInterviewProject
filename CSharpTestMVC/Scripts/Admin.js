@@ -106,8 +106,8 @@ function DrawAdminTable(adminList) {
             $("#editUserform").show();
             $("#editUserFormDialog").dialog({
                 autoOpen: false,
-                height: 400,
-                width: 800,
+                height: 200,
+                width: 600,
                 modal: true,
             });
             $("#editUserFormDialog").dialog("open");
@@ -146,8 +146,8 @@ function OpenCreateNewUserForm() {
     $("#createnewuserform").show();
     $("#userFormDialog").dialog({
         autoOpen: false,
-        height: 400,
-        width: 800,
+        height: 200,
+        width: 600,
         modal: true
     });
     $("#userFormDialog").dialog("open");

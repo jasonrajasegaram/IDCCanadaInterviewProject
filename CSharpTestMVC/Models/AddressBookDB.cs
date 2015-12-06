@@ -71,6 +71,12 @@ namespace CSharpTestMVC.Models
             return retVal;
         }
         //User Code
+        public static UInt32 LogOutUser()
+        {
+            UInt32 retVal = 0;
+            HttpContext.Current.Session["currUserID"] = null;
+            return retVal;
+        }
         public static UInt32 SetSessionUser(User user)
         {
             UInt32 retVal = 0;
@@ -124,7 +130,7 @@ namespace CSharpTestMVC.Models
                 string pathQuery = myuri.PathAndQuery;
                 string hostName = myuri.ToString().Replace(pathQuery, "");
                 string forgotPasswordLink = hostName + "/ForgotPassword/Index";
-                SendEmail(newUser.userName, "Address Book Account Confirmation", "Hello " + firstName + ", Your username is " + userName + " and your temporary password is " + passwordToEncrypt + ". To change your password please go to the following link: " + forgotPasswordLink);
+                SendEmail(newUser.userName, "Address Book Account Confirmation", "Hello " + firstName + ", <br/> Your username is " + userName + " and your temporary password is " + passwordToEncrypt + ". To change your password please go to the following link: " + forgotPasswordLink);
             }
             else
             {
@@ -198,7 +204,7 @@ namespace CSharpTestMVC.Models
             return retVal;
         }
         //Contact Code
-        public static UInt32 CreateNewContact(string firstName, string lastName, string phoneNumber, string streetName, string city, string province, string postalCode, string country)
+        public static UInt32 CreateNewContact(string firstName, string lastName, string phoneNumber, string streetName, string city, string province, string postalCode, string country, string notes)
         {
             UInt32 retVal = 0;
             User currUser = GetCurrentUser();
@@ -218,6 +224,7 @@ namespace CSharpTestMVC.Models
             newContact.province = province;
             newContact.postalCode = postalCode;
             newContact.country = country;
+            newContact.notes = notes;
             newContact.contact_connection = db.Users.Where(u=>u.ID == currUser.ID).FirstOrDefault();
             db.Contacts.Add(newContact);
             currUser.userContacts.Add(newContact);
@@ -237,7 +244,7 @@ namespace CSharpTestMVC.Models
             }
             return retVal;
         }
-        public static UInt32 EditContact(int contactID, string firstName, string lastName, string phoneNumber, string streetName, string city, string province, string postalCode, string country)
+        public static UInt32 EditContact(int contactID, string firstName, string lastName, string phoneNumber, string streetName, string city, string province, string postalCode, string country, string notes)
         {
             UInt32 retVal = 0;
             var db = new IDCCanadaAddressBook();
@@ -259,6 +266,7 @@ namespace CSharpTestMVC.Models
                 aContact.city = city;
                 aContact.postalCode = postalCode;
                 aContact.country = country;
+                aContact.notes = notes;
                 db.SaveChanges();
             }
             return retVal;
@@ -272,6 +280,7 @@ namespace CSharpTestMVC.Models
             MailMessage mail = new MailMessage(from, to);
             NetworkCredential credentials = new NetworkCredential("no-reply@jmqtnonsense.ca", "ZMG59k7v");
             mail.Subject=subject;
+            mail.IsBodyHtml = true;
             mail.Body=body;
             SmtpClient smtp = new SmtpClient();
             smtp.Host = "mail.jmqtnonsense.ca";
@@ -316,6 +325,7 @@ namespace CSharpTestMVC.Models
                 user.password = encryptedNewPassword;
                 user.temporaryPassword = null;
                 db.SaveChanges();
+                SetSessionUser(user);
             }
             return retVal;
         }
@@ -339,7 +349,7 @@ namespace CSharpTestMVC.Models
                 string pathQuery = myuri.PathAndQuery;
                 string hostName = myuri.ToString().Replace(pathQuery, "");
                 string forgotPasswordLink = hostName + "/ForgotPassword/Index";
-                SendEmail(userName, "Address Book Account Confirmation", "Hello " + decryptedFirstName + ", Your username is " + userName + " and your temporary password is " + passwordToEncrypt + ". To change your password please go to the following link: " + forgotPasswordLink);
+                SendEmail(userName, "Address Book Account Confirmation", "Hello " + decryptedFirstName + ",<br/> Your username is " + userName + " and your temporary password is " + passwordToEncrypt + ". To change your password please go to the following link: " + forgotPasswordLink);
             }
             return userFound;
         }

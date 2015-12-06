@@ -9,10 +9,11 @@ namespace CSharpTestMVC.Controllers
 {
     public class ContactController : Controller
     {
-        public JsonResult EditContact(string contactID, string firstName, string lastName, string phoneNumber, string streetName, string city, string province, string postalCode, string country)
+        [ValidateInput(false)]
+        public JsonResult EditContact(string contactID, string firstName, string lastName, string phoneNumber, string streetName, string city, string province, string postalCode, string country,string notes)
         {
             int contactIDNumber = Convert.ToInt32(contactID);
-            AddressBookDB.EditContact(contactIDNumber, firstName, lastName, phoneNumber, streetName, city, province, postalCode, country);
+            AddressBookDB.EditContact(contactIDNumber, firstName, lastName, phoneNumber, streetName, city, province, postalCode, country, notes);
             return Json("", JsonRequestBehavior.AllowGet);
         }
         public JsonResult DeleteContact(string contactNumber)
@@ -21,9 +22,10 @@ namespace CSharpTestMVC.Controllers
             AddressBookDB.DeleteContact(contactID);
             return Json("", JsonRequestBehavior.AllowGet);
         }
-        public JsonResult AddNewContact(string firstName, string lastName, string phoneNumber, string streetName, string city, string province, string postalCode, string country)
+        [ValidateInput(false)]
+        public JsonResult AddNewContact(string firstName, string lastName, string phoneNumber, string streetName, string city, string province, string postalCode, string country, string notes)
         {
-            AddressBookDB.CreateNewContact(firstName, lastName, phoneNumber, streetName, city, province, postalCode, country);
+            AddressBookDB.CreateNewContact(firstName, lastName, phoneNumber, streetName, city, province, postalCode, country, notes);
             return Json("", JsonRequestBehavior.AllowGet);
         }
         // GET: Contact

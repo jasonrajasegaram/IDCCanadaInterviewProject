@@ -54,6 +54,7 @@ function SubmitNewPassword() {
     var successFunction = function () {
         $("#passwordRecoveryFormparttwo").hide();
         $("#PasswordChanged").show();
+        $(".navigationBar").show();
     };
     ajaxCall("/ForgotPassword/NewPassword", sendData, successFunction, null);
 }

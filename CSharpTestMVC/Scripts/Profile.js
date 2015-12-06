@@ -66,8 +66,8 @@ function OpenEditProfileForm() {
     $("#editProfileform").show();
     $("#editProfileFormDialog").dialog({
         autoOpen: false,
-        height: 400,
-        width: 800,
+        height: 200,
+        width: 600,
         modal: true
     });
     $("#editProfileFormDialog").dialog("open");
